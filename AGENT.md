@@ -31,6 +31,19 @@ Android-приложение «Правила Эволюции» — справ�
 .\gradlew.bat test
 ```
 
+## Эмулятор
+- АВД лежит на D: (`D:\Android\avd\`), переменная `ANDROID_AVD_HOME=D:\Android\avd`.
+- Запускать эмулятор нужно **всегда с диска D** (на C: не хватает места):
+  ```powershell
+  $env:ANDROID_AVD_HOME = "D:\Android\avd"
+  Start-Process -FilePath "D:\Work\Soft\Android\Sdk\emulator\emulator.exe" -ArgumentList "-avd Pixel_6_API_31 -no-snapshot -no-boot-anim"
+  ```
+- Установка APK и запуск:
+  ```powershell
+  & "D:\Work\Soft\Android\Sdk\platform-tools\adb.exe" install -r "build\outputs\apk\debug\evolutionRules-debug.apk"
+  & "D:\Work\Soft\Android\Sdk\platform-tools\adb.exe" shell am start -n com.example.evolutionrules/.MainActivity
+  ```
+
 ## Правила для агента
 1. UI-строки только на русском.
 2. Поиск обязан оставаться ё-толерантным (`normalized()`).
@@ -38,3 +51,4 @@ Android-приложение «Правила Эволюции» — справ�
 4. Новые токены фишек/символов — добавлять в `ALWAYS_TOKENS` или `ANIMAL_BOUNDARY` + в `inlineMap`, с `contentDescription` на русском.
 5. Навигацию держать простой (один экран `selectedEntry`), `rememberSaveable` для `query`.
 6. Не понижать `minSdk`, не менять namespace без запроса.
+7. Запуск эмулятора — только через `D:\Android\avd\` (на C: не хватает места).
